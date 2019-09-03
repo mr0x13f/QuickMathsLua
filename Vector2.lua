@@ -153,7 +153,7 @@ function Vector2.trim(vector, len)
 
     if vector:magnitude2() == 0 then return vector end
 
-    return len/vector:magnitude() * vector
+    return len / math.max(vector:magnitude(),len) * vector
 
 end
 
