@@ -145,6 +145,30 @@ function Vector4.unpack(v)
 
 end
 
+function Vector4.floor(vector)
+
+    local out = Vector4()
+
+    for i=1,#vector do
+        out[i] = math.floor(vector[i])
+    end
+
+    return out
+
+end
+
+function Vector4.ceil(vector)
+
+    local out = Vector4()
+
+    for i=1,#vector do
+        out[i] = math.ceil(vector[i])
+    end
+
+    return out
+
+end
+
 function Vector4.clamp(vector, min, max)
 
     if not min then min = vector end

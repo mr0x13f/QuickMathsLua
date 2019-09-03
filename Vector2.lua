@@ -90,6 +90,30 @@ function Vector2.unpack(v)
 
 end
 
+function Vector2.floor(vector)
+
+    local out = Vector2()
+
+    for i=1,#vector do
+        out[i] = math.floor(vector[i])
+    end
+
+    return out
+
+end
+
+function Vector2.ceil(vector)
+
+    local out = Vector2()
+
+    for i=1,#vector do
+        out[i] = math.ceil(vector[i])
+    end
+
+    return out
+
+end
+
 function Vector2.clamp(vector, min, max)
 
     if not min then min = vector end

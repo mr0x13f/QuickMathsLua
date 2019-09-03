@@ -141,6 +141,30 @@ function Vector3.unpack(v)
 
 end
 
+function Vector3.floor(vector)
+
+    local out = Vector3()
+
+    for i=1,#vector do
+        out[i] = math.floor(vector[i])
+    end
+
+    return out
+
+end
+
+function Vector3.ceil(vector)
+
+    local out = Vector3()
+
+    for i=1,#vector do
+        out[i] = math.ceil(vector[i])
+    end
+
+    return out
+
+end
+
 function Vector3.clamp(vector, min, max)
 
     if not min then min = vector end
