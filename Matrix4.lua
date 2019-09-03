@@ -154,7 +154,13 @@ end
 
 function Matrix4.fromTransform(pos, rot, scale)
 
-    return Matrix4.fromScale(scale) * Matrix4.fromRotation(rot) * Matrix4.fromPosition(pos)
+    local out = Matrix4()
+
+    if scale then out = out * Matrix4.fromScale(scale) end
+    if rot then out = out * Matrix4.fromRotation(rot) end
+    if pos then out = out * Matrix4.fromPosition(pos) end
+
+    return out
 
 end
 
