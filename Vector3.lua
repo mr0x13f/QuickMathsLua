@@ -324,7 +324,7 @@ function Vector3.addMatrix(vector,matrix)
 
     for r=1,#vector do
         for c=1,#vector do
-            out[i] = matrix:get(r,c) + vector[r]
+            out[r] = matrix:get(r,c) + vector[r]
         end
     end
 
@@ -364,7 +364,7 @@ function Vector3.subMatrix(vector,matrix)
 
     for r=1,#vector do
         for c=1,#vector do
-            out[i] = matrix:get(r,c) - vector[r]
+            out[r] = matrix:get(r,c) - vector[r]
         end
     end
 
@@ -418,7 +418,7 @@ function Vector3.mulMatrix(vector,matrix)
 
     for r=1,#vector do
         for c=1,#vector do
-            out[i] = matrix:get(r,c) * vector[r]
+            out[r] = matrix:get(r,c) * vector[r]
         end
     end
 
@@ -472,7 +472,7 @@ function Vector3.divMatrix(vector,matrix)
 
     for r=1,#vector do
         for c=1,#vector do
-            out[i] = matrix:get(r,c) / vector[r]
+            out[r] = matrix:get(r,c) / vector[r]
         end
     end
 
@@ -526,7 +526,7 @@ function Vector3.modMatrix(vector,matrix)
 
     for r=1,#vector do
         for c=1,#vector do
-            out[i] = matrix:get(r,c) % vector[r]
+            out[r] = matrix:get(r,c) % vector[r]
         end
     end
 
@@ -580,7 +580,7 @@ function Vector3.powMatrix(vector,matrix)
 
     for r=1,#vector do
         for c=1,#vector do
-            out[i] = matrix:get(r,c) ^ vector[r]
+            out[r] = matrix:get(r,c) ^ vector[r]
         end
     end
 
