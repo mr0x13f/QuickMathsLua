@@ -205,15 +205,12 @@ function Matrix4.set(matrix, row, column, value)
 
 end
 
-function Matrix4.unpack(matrix)
+function Matrix4.unpack(m)
 
-    local out = {}
-
-    for i=1,#matrix do
-        table.insert(out, matrix[i])
-    end
-
-    return unpack(out)
+    return  m[1], m[2], m[3], m[4],
+            m[5], m[6], m[7], m[8],
+            m[9], m[10], m[11], m[12],
+            m[13], m[14], m[15], m[16]
 
 end
 

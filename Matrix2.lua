@@ -105,15 +105,10 @@ function Matrix2.set(matrix, row, column, value)
 
 end
 
-function Matrix2.unpack(matrix)
+function Matrix2.unpack(m)
 
-    local out = {}
-
-    for i=1,#matrix do
-        table.insert(out, matrix[i])
-    end
-
-    return unpack(out)
+    return  m[1], m[2],
+            m[3], m[4]
 
 end
 

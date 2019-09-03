@@ -137,15 +137,9 @@ function Vector4.toHex(vector)
 
 end
 
-function Vector4.unpack(vector)
+function Vector4.unpack(v)
 
-    local out = {}
-
-    for i=1,#vector do
-        table.insert(out, vector[i])
-    end
-
-    return unpack(out)
+    return v[1], v[2], v[3], v[4]
 
 end
 
