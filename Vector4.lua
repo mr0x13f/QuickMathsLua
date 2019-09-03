@@ -87,13 +87,13 @@ function Vector4.new(...)
 
 end
 
-function Vector4.fromHex(hex)
+function Vector4.fromHex(hex, opacity)
 
     assert(type(hex) == "string", "Invalid arguments")
 
     if hex:sub(1,1) == "#" then hex = hex:sub(2,#hex) end
 
-    local out = Vector4(0,0,0,1)
+    local out = Vector4()
 
     if #hex == 3 then
 
@@ -114,6 +114,8 @@ function Vector4.fromHex(hex)
     else
         error("Invalid hex string")
     end
+
+    out.a = opacity or 1
 
     return out
 
