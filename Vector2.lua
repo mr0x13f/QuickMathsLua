@@ -329,7 +329,7 @@ function Vector2.mulNumber(vector,scalar)
 
     local out = Vector2()
 
-    for i=1,#a do
+    for i=1,#vector do
         out[i] = vector[i] * scalar
     end
 
@@ -383,7 +383,7 @@ function Vector2.divNumber(vector,scalar)
 
     local out = Vector2()
 
-    for i=1,#a do
+    for i=1,#vector do
         out[i] = vector[i] / scalar
     end
 
@@ -437,7 +437,7 @@ function Vector2.modNumber(vector,modulus)
 
     local out = Vector2()
 
-    for i=1,#a do
+    for i=1,#vector do
         out[i] = vector[i] % modulus
     end
 
@@ -491,7 +491,7 @@ function Vector2.powNumber(vector,factor)
 
     local out = Vector2()
 
-    for i=1,#a do
+    for i=1,#vector do
         out[i] = vector[i] ^ factor
     end
 
@@ -529,7 +529,7 @@ function Vector2.__unm(vector)
 
     local out = Vector2()
 
-    for i=1,#a do
+    for i=1,#vector do
         out[i] = -vector[i]
     end
 
