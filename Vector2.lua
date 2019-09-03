@@ -143,11 +143,15 @@ end
 
 function Vector2.normalize(vector)
 
+    if vector:magnitude2() == 0 then return vector end
+
     return 1/vector:magnitude() * vector
 
 end
 
 function Vector2.trim(vector, len)
+
+    if vector:magnitude2() == 0 then return vector end
 
     return len/vector:magnitude() * vector
 
