@@ -209,6 +209,7 @@ end
 function Vector3.trim(vector, len)
 
     if vector:magnitude2() == 0 then return vector end
+    if len < 0 then len = -len end
 
     return len / math.max(vector:magnitude(),len) * vector
 
