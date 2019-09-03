@@ -195,7 +195,7 @@ function Vector4:__newindex(key, value)
         rawset(self, key, value)
 
     else
-        error("Vector4 has no attribute \""..key.."\"")
+        error("Vector4 has no attribute \""..tostring(key).."\"")
     end
 
 end

@@ -148,7 +148,7 @@ function Matrix2:__newindex(key, value)
         rawset(self, key, value)
 
     else
-        error("Matrix2 has no attribute \""..key.."\"")
+        error("Matrix2 has no attribute \""..tostring(key).."\"")
     end
 
 end

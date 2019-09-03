@@ -202,7 +202,7 @@ function Vector2:__newindex(key, value)
         rawset(self, key, value)
 
     else
-        error("Vector2 has no attribute \""..key.."\"")
+        error("Vector2 has no attribute \""..tostring(key).."\"")
     end
 
 end
