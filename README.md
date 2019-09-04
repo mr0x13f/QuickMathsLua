@@ -1,5 +1,6 @@
 # QuickMaths
 ***NOTE: VERY WIP! The outputs might not be correct.***
+
 An FFI-supercharged vector library for Lua.
 Made with LÖVE in mind, but should work perfectly find on other frameworks running a similar-enough version of Lua.
 Documentation will be made once everything works properly.
