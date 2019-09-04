@@ -2,6 +2,13 @@ local ffi
 Matrix4 = {}
 setmetatable(Matrix4, Matrix4)
 
+Matrix4.keys = {
+    r1c1 = 1, r1c2 = 2, r1c3 = 3, r1c4 = 4,
+    r2c1 = 5, r2c2 = 6, r2c3 = 7, r2c4 = 8,
+    r3c1 = 9, r3c2 = 10, r3c3 = 11, r3c4 = 12,
+    r4c1 = 13, r4c2 = 14, r4c3 = 15, r4c4 = 16,
+}
+
 if jit and jit.status() then
 
     ffi = require"ffi"
@@ -291,8 +298,9 @@ function Matrix4:__index(key)
     if rawget(Matrix4, key) then
         return rawget(Matrix4, key)
 
-    elseif type(key) == "number" then
+    elseif type(key) == "number" or Matrix4.keys[key] then
 
+        if Matrix4.keys[key] then key = Matrix4.keys[key] end
         return self.components[key-1]
 
     else
@@ -303,8 +311,9 @@ end
 
 function Matrix4:__newindex(key, value)
 
-    if type(key) == "number"then
+    if type(key) == "number" or Matrix4.keys[key] then
 
+        if Matrix4.keys[key] then key = Matrix4.keys[key] end
         self.components[key-1] = value
 
     elseif self == Matrix4 then
