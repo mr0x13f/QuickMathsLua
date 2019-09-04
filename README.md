@@ -1,9 +1,11 @@
 # QuickMaths
-An FFI-supercharged vector library for Lua
+An FFI-supercharged vector library for Lua.
 
 ## Usage
 
 ```lua
+require"quickmaths"
+
 -- Constructors
 vec2 = Vector2()
 vec3 = Vector3()
