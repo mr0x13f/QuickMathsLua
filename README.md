@@ -15,7 +15,7 @@ mat3 = Matrix3()
 mat4 = Matrix4()
 
 -- Nested component arguments
-vec3 = Vecor3(Vector2(1,2), 3)
+vec3 = Vector3(Vector2(1,2), 3)
 print(vec3) --> (1,2,3)
 mat3 = Matrix3({{1,2,3}, {4,5,6}, {7,8,9}})
 print(mat3) -->
