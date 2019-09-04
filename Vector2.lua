@@ -3,8 +3,7 @@ Vector2 = {}
 setmetatable(Vector2, Vector2)
 
 Vector2.keys = {
-    x = 1,
-    y = 2,
+    x = 1, y = 2,
 }
 
 if jit and jit.status() then
@@ -284,17 +283,12 @@ function Vector2.addVector(a,b)
 
 end
 
-function Vector2.addMatrix(vector,matrix)
+function Vector2.addMatrix(vec,mat)
     
-    local out = Vector2()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = b[r][c] + a[r]
-        end
-    end
-
-    return out
+    return Vector2(
+        vec.x + mat.r1c1 + vec.y + mat.r2c1,
+        vec.x + mat.r1c2 + vec.y + mat.r2c2
+    )
 
 end
 
@@ -324,17 +318,12 @@ function Vector2.subVector(a,b)
 
 end
 
-function Vector2.subMatrix(vector,matrix)
+function Vector2.subMatrix(vec,mat)
     
-    local out = Vector2()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = b[r][c] - a[r]
-        end
-    end
-
-    return out
+    return Vector2(
+        vec.x - mat.r1c1 + vec.y - mat.r2c1,
+        vec.x - mat.r1c2 + vec.y - mat.r2c2
+    )
 
 end
 
@@ -378,17 +367,12 @@ function Vector2.mulVector(a,b)
 
 end
 
-function Vector2.mulMatrix(vector,matrix)
+function Vector2.mulMatrix(vec,mat)
     
-    local out = Vector2()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) * vector[r]
-        end
-    end
-
-    return out
+    return Vector2(
+        vec.x * mat.r1c1 + vec.y * mat.r2c1,
+        vec.x * mat.r1c2 + vec.y * mat.r2c2
+    )
 
 end
 
@@ -432,17 +416,12 @@ function Vector2.divVector(a,b)
 
 end
 
-function Vector2.divMatrix(vector,matrix)
+function Vector2.divMatrix(vec,mat)
     
-    local out = Vector2()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) / vector[r]
-        end
-    end
-
-    return out
+    return Vector2(
+        vec.x / mat.r1c1 + vec.y / mat.r2c1,
+        vec.x / mat.r1c2 + vec.y / mat.r2c2
+    )
 
 end
 
@@ -486,18 +465,12 @@ function Vector2.modVector(a,b)
 
 end
 
-function Vector2.modMatrix(vector,matrix)
+function Vector2.modMatrix(vec,mat)
     
-    local out = Vector2()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) % vector[r]
-        end
-    end
-
-    return out
-
+    return Vector2(
+        vec.x % mat.r1c1 + vec.y % mat.r2c1,
+        vec.x % mat.r1c2 + vec.y % mat.r2c2
+    )
 end
 
 function Vector2.__pow(a,b)
@@ -540,17 +513,12 @@ function Vector2.powVector(a,b)
 
 end
 
-function Vector2.powMatrix(vector,matrix)
-    
-    local out = Vector2()
+function Vector2.powMatrix(vec,mat)
 
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) ^ vector[r]
-        end
-    end
-
-    return out
+    return Vector2(
+        vec.x ^ mat.r1c1 + vec.y ^ mat.r2c1,
+        vec.x ^ mat.r1c2 + vec.y ^ mat.r2c2
+    )
 
 end
 

@@ -3,13 +3,8 @@ Vector3 = {}
 setmetatable(Vector3, Vector3)
 
 Vector3.keys = {
-    x = 1,
-    y = 2,
-    z = 3,
-
-    r = 1,
-    g = 2,
-    b = 3,
+    x = 1, y = 2, z = 3,
+    r = 1, g = 2, b = 3,
 }
 
 if jit and jit.status() then
@@ -347,17 +342,13 @@ function Vector3.addVector(a,b)
 
 end
 
-function Vector3.addMatrix(vector,matrix)
+function Vector3.addMatrix(vec,mat)
     
-    local out = Vector3()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) + vector[r]
-        end
-    end
-
-    return out
+    return Vector3(
+        vec.x + mat.r1c1 + vec.y + mat.r2c1 + vec.z + mat.r3c1,
+        vec.x + mat.r1c2 + vec.y + mat.r2c2 + vec.z + mat.r3c2,
+        vec.x + mat.r1c3 + vec.y + mat.r2c3 + vec.z + mat.r3c3
+    )
 
 end
 
@@ -387,17 +378,13 @@ function Vector3.subVector(a,b)
 
 end
 
-function Vector3.subMatrix(vector,matrix)
+function Vector3.subMatrix(vec,mat)
     
-    local out = Vector3()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) - vector[r]
-        end
-    end
-
-    return out
+    return Vector3(
+        vec.x - mat.r1c1 + vec.y - mat.r2c1 + vec.z - mat.r3c1,
+        vec.x - mat.r1c2 + vec.y - mat.r2c2 + vec.z - mat.r3c2,
+        vec.x - mat.r1c3 + vec.y - mat.r2c3 + vec.z - mat.r3c3
+    )
 
 end
 
@@ -441,17 +428,13 @@ function Vector3.mulVector(a,b)
 
 end
 
-function Vector3.mulMatrix(vector,matrix)
-    
-    local out = Vector3()
+function Vector3.mulMatrix(vec,mat)
 
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) * vector[r]
-        end
-    end
-
-    return out
+    return Vector3(
+        vec.x * mat.r1c1 + vec.y * mat.r2c1 + vec.z * mat.r3c1,
+        vec.x * mat.r1c2 + vec.y * mat.r2c2 + vec.z * mat.r3c2,
+        vec.x * mat.r1c3 + vec.y * mat.r2c3 + vec.z * mat.r3c3
+    )
 
 end
 
@@ -495,17 +478,13 @@ function Vector3.divVector(a,b)
 
 end
 
-function Vector3.divMatrix(vector,matrix)
+function Vector3.divMatrix(vec,mat)
     
-    local out = Vector3()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) / vector[r]
-        end
-    end
-
-    return out
+    return Vector3(
+        vec.x / mat.r1c1 + vec.y / mat.r2c1 + vec.z / mat.r3c1,
+        vec.x / mat.r1c2 + vec.y / mat.r2c2 + vec.z / mat.r3c2,
+        vec.x / mat.r1c3 + vec.y / mat.r2c3 + vec.z / mat.r3c3
+    )
 
 end
 
@@ -549,17 +528,13 @@ function Vector3.modVector(a,b)
 
 end
 
-function Vector3.modMatrix(vector,matrix)
+function Vector3.modMatrix(vec,mat)
     
-    local out = Vector3()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) % vector[r]
-        end
-    end
-
-    return out
+    return Vector3(
+        vec.x % mat.r1c1 + vec.y % mat.r2c1 + vec.z % mat.r3c1,
+        vec.x % mat.r1c2 + vec.y % mat.r2c2 + vec.z % mat.r3c2,
+        vec.x % mat.r1c3 + vec.y % mat.r2c3 + vec.z % mat.r3c3
+    )
 
 end
 
@@ -603,17 +578,13 @@ function Vector3.powVector(a,b)
 
 end
 
-function Vector3.powMatrix(vector,matrix)
+function Vector3.powMatrix(vec,mat)
     
-    local out = Vector3()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) ^ vector[r]
-        end
-    end
-
-    return out
+    return Vector3(
+        vec.x ^ mat.r1c1 + vec.y ^ mat.r2c1 + vec.z ^ mat.r3c1,
+        vec.x ^ mat.r1c2 + vec.y ^ mat.r2c2 + vec.z ^ mat.r3c2,
+        vec.x ^ mat.r1c3 + vec.y ^ mat.r2c3 + vec.z ^ mat.r3c3
+    )
 
 end
 

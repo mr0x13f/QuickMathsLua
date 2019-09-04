@@ -3,15 +3,8 @@ Vector4 = {}
 setmetatable(Vector4, Vector4)
 
 Vector4.keys = {
-    x = 1,
-    y = 2,
-    z = 3,
-    w = 4,
-
-    r = 1,
-    g = 2,
-    b = 3,
-    a = 4,
+    x = 1, y = 2, z = 3, w = 4,
+    r = 1, g = 2, b = 3, a = 4,
 }
 
 if jit and jit.status() then
@@ -49,7 +42,7 @@ local function getComponents(args, components)
     for i=1,#args do
         if type(args[i]) == "number" then
             table.insert(components, args[i])
-        elseif type(args[i]) == "table" or isVector2(args[i]) or isVector4(args[i]) or isVector4(args[i]) then
+        elseif type(args[i]) == "table" or isVector2(args[i]) or isVector3(args[i]) or isVector4(args[i]) then
             getComponents(args[i], components)
         else
             error("Invalid component #"..(#components+1).." \""..tostring(args[i]).."\"")
@@ -274,17 +267,14 @@ function Vector4.addVector(a,b)
 
 end
 
-function Vector4.addMatrix(vector,matrix)
+function Vector4.addMatrix(vec,mat)
     
-    local out = Vector4()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) + vector[r]
-        end
-    end
-
-    return out
+    return Vector4(
+        vec.x + mat.r1c1 + vec.y + mat.r2c1 + vec.z + mat.r3c1 + vec.w + mat.r4c1,
+        vec.x + mat.r1c2 + vec.y + mat.r2c2 + vec.z + mat.r3c2 + vec.w + mat.r4c2,
+        vec.x + mat.r1c3 + vec.y + mat.r2c3 + vec.z + mat.r3c3 + vec.w + mat.r4c3,
+        vec.x + mat.r1c4 + vec.y + mat.r2c4 + vec.z + mat.r3c4 + vec.w + mat.r4c4
+    )
 
 end
 
@@ -314,17 +304,14 @@ function Vector4.subVector(a,b)
 
 end
 
-function Vector4.subMatrix(vector,matrix)
+function Vector4.subMatrix(vec,mat)
     
-    local out = Vector4()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) - vector[r]
-        end
-    end
-
-    return out
+    return Vector4(
+        vec.x - mat.r1c1 + vec.y - mat.r2c1 + vec.z - mat.r3c1 + vec.w - mat.r4c1,
+        vec.x - mat.r1c2 + vec.y - mat.r2c2 + vec.z - mat.r3c2 + vec.w - mat.r4c2,
+        vec.x - mat.r1c3 + vec.y - mat.r2c3 + vec.z - mat.r3c3 + vec.w - mat.r4c3,
+        vec.x - mat.r1c4 + vec.y - mat.r2c4 + vec.z - mat.r3c4 + vec.w - mat.r4c4
+    )
 
 end
 
@@ -368,17 +355,14 @@ function Vector4.mulVector(a,b)
 
 end
 
-function Vector4.mulMatrix(vector,matrix)
+function Vector4.mulMatrix(vec,mat)
     
-    local out = Vector4()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) * vector[r]
-        end
-    end
-
-    return out
+    return Vector4(
+        vec.x * mat.r1c1 + vec.y * mat.r2c1 + vec.z * mat.r3c1 + vec.w * mat.r4c1,
+        vec.x * mat.r1c2 + vec.y * mat.r2c2 + vec.z * mat.r3c2 + vec.w * mat.r4c2,
+        vec.x * mat.r1c3 + vec.y * mat.r2c3 + vec.z * mat.r3c3 + vec.w * mat.r4c3,
+        vec.x * mat.r1c4 + vec.y * mat.r2c4 + vec.z * mat.r3c4 + vec.w * mat.r4c4
+    )
 
 end
 
@@ -422,17 +406,14 @@ function Vector4.divVector(a,b)
 
 end
 
-function Vector4.divMatrix(vector,matrix)
+function Vector4.divMatrix(vec,mat)
     
-    local out = Vector4()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) / vector[r]
-        end
-    end
-
-    return out
+    return Vector4(
+        vec.x / mat.r1c1 + vec.y / mat.r2c1 + vec.z / mat.r3c1 + vec.w / mat.r4c1,
+        vec.x / mat.r1c2 + vec.y / mat.r2c2 + vec.z / mat.r3c2 + vec.w / mat.r4c2,
+        vec.x / mat.r1c3 + vec.y / mat.r2c3 + vec.z / mat.r3c3 + vec.w / mat.r4c3,
+        vec.x / mat.r1c4 + vec.y / mat.r2c4 + vec.z / mat.r3c4 + vec.w / mat.r4c4
+    )
 
 end
 
@@ -476,17 +457,14 @@ function Vector4.modVector(a,b)
 
 end
 
-function Vector4.modMatrix(vector,matrix)
+function Vector4.modMatrix(vec,mat)
     
-    local out = Vector4()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) % vector[r]
-        end
-    end
-
-    return out
+    return Vector4(
+        vec.x % mat.r1c1 + vec.y % mat.r2c1 + vec.z % mat.r3c1 + vec.w % mat.r4c1,
+        vec.x % mat.r1c2 + vec.y % mat.r2c2 + vec.z % mat.r3c2 + vec.w % mat.r4c2,
+        vec.x % mat.r1c3 + vec.y % mat.r2c3 + vec.z % mat.r3c3 + vec.w % mat.r4c3,
+        vec.x % mat.r1c4 + vec.y % mat.r2c4 + vec.z % mat.r3c4 + vec.w % mat.r4c4
+    )
 
 end
 
@@ -530,17 +508,14 @@ function Vector4.powVector(a,b)
 
 end
 
-function Vector4.powMatrix(vector,matrix)
+function Vector4.powMatrix(vec,mat)
     
-    local out = Vector4()
-
-    for r=1,#vector do
-        for c=1,#vector do
-            out[r] = matrix:get(r,c) ^ vector[r]
-        end
-    end
-
-    return out
+    return Vector4(
+        vec.x ^ mat.r1c1 + vec.y ^ mat.r2c1 + vec.z ^ mat.r3c1 + vec.w ^ mat.r4c1,
+        vec.x ^ mat.r1c2 + vec.y ^ mat.r2c2 + vec.z ^ mat.r3c2 + vec.w ^ mat.r4c2,
+        vec.x ^ mat.r1c3 + vec.y ^ mat.r2c3 + vec.z ^ mat.r3c3 + vec.w ^ mat.r4c3,
+        vec.x ^ mat.r1c4 + vec.y ^ mat.r2c4 + vec.z ^ mat.r3c4 + vec.w ^ mat.r4c4
+    )
 
 end
 
