@@ -1,5 +1,8 @@
 # QuickMaths
+***NOTE: VERY WIP! The outputs might not be correct.***
 An FFI-supercharged vector library for Lua.
+Made with LÖVE in mind, but should work perfectly find on other frameworks running a similar-enough version of Lua.
+Documentation will be made once everything works properly.
 
 ## Usage
 
@@ -60,6 +63,7 @@ perspective = Matrix4.fromPerspective(90, 16/9, 0.1, 1000)
 ```
 
 ## Usage with LÖVE
+
 ```lua
 -- Using web colors
 color = Vector3.fromHex("#DE2A6E")
