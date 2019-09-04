@@ -58,3 +58,14 @@ scale = Vector3(1,1,1)
 transform = Matrix4.fromTransform(pos, rot, scale)
 perspective = Matrix4.fromPerspective(90, 16/9, 0.1, 1000)
 ```
+
+## Usage with LÖVE
+```lua
+-- Using web colors
+color = Vector3.fromHex("#DE2A6E")
+love.graphics.setColor(color:unpack())
+
+-- Sending matrices to a shader
+perspective = Matrix4.fromPerspective(90, 16/9, 0.1, 1000)
+shader:send("projection", {projection:unpack()})
+```
