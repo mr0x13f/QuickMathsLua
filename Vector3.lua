@@ -132,76 +132,80 @@ end
 
 function Vector3.unpack(v)
 
-    return v[1], v[2], v[3]
+    return v.x, v.y, v.z
 
 end
 
-function Vector3.floor(vector)
+function Vector3.abs(vec)
 
-    local out = Vector3()
-
-    for i=1,#vector do
-        out[i] = math.floor(vector[i])
-    end
-
-    return out
+    return Vector3(
+        math.abs(vec.x),
+        math.abs(vec.y),
+        math.abs(vec.z)
+    )
 
 end
 
-function Vector3.ceil(vector)
+function Vector3.floor(vec)
 
-    local out = Vector3()
-
-    for i=1,#vector do
-        out[i] = math.ceil(vector[i])
-    end
-
-    return out
+    return Vector3(
+        math.floor(vec.x),
+        math.floor(vec.y),
+        math.floor(vec.z)
+    )
 
 end
 
-function Vector3.clamp(vector, min, max)
+function Vector3.ceil(vec)
 
-    if not min then min = vector end
-    if not max then max = vector end
-
-    local out = Vector3()
-
-    for i=1,#vector do
-        out[i] = math.max(math.min(vector[i], max[i]), min[i])
-    end
-
-    return out
+    return Vector3(
+        math.ceil(vec.x),
+        math.ceil(vec.y),
+        math.ceil(vec.z)
+    )
 
 end
 
-function Vector3.angle(vector)
+function Vector3.clamp(vec, min, max)
+
+    if not min then min = vec end
+    if not max then max = vec end
+
+    return Vector3(
+        math.max(math.min(vec.x, max.x), min.x),
+        math.max(math.min(vec.y, max.y), min.y),
+        math.max(math.min(vec.z, max.z), min.z)
+    )
+
+end
+
+function Vector3.angle(vec)
 
     local out = Vector3()
 
-    out.x = math.atan2(math.sqrt(vector.y^2+vector.z^2),vector.x)
-    out.y = math.atan2(math.sqrt(vector.z^2+vector.x^2),vector.y)
-    out.z = math.atan2(math.sqrt(vector.x^2+vector.y^2),vector.z)
+    out.x = math.atan2(math.sqrt(vec.y^2+vec.z^2),vec.x)
+    out.y = math.atan2(math.sqrt(vec.z^2+vec.x^2),vec.y)
+    out.z = math.atan2(math.sqrt(vec.x^2+vec.y^2),vec.z)
 
     return out
     
 end
 
-function Vector3.rotate(vector, angle)
+function Vector3.rotate(vec, angle)
 
-    return vector * Matrix3.fromRotationZ(angle.z) * Matrix3.fromRotationY(angle.y) * Matrix3.fromRotationX(angle.x)
-
-end
-
-function Vector3.magnitude(vector)
-
-    return math.sqrt(vector.x^2 + vector.y^2 + vector.z^2)
+    return vec * Matrix3.fromRotationZ(angle.z) * Matrix3.fromRotationY(angle.y) * Matrix3.fromRotationX(angle.x)
 
 end
 
-function Vector3.magnitude2(vector)
+function Vector3.magnitude(vec)
 
-    return vector.x^2 + vector.y^2 + vector.z^2
+    return math.sqrt(vec.x^2 + vec.y^2 + vec.z^2)
+
+end
+
+function Vector3.magnitude2(vec)
+
+    return vec.x^2 + vec.y^2 + vec.z^2
 
 end
 
@@ -217,20 +221,20 @@ function Vector3.distance2(a,b)
 
 end
 
-function Vector3.normalize(vector)
+function Vector3.normalize(vec)
 
-    if vector:magnitude2() == 0 then return vector end
+    if vec:magnitude2() == 0 then return vec end
 
-    return 1/vector:magnitude() * vector
+    return 1/vec:magnitude() * vec
 
 end
 
-function Vector3.trim(vector, len)
+function Vector3.trim(vec, len)
 
-    if vector:magnitude2() == 0 then return vector end
+    if vec:magnitude2() == 0 then return vec end
     if len < 0 then len = -len end
 
-    return len / math.max(vector:magnitude(),len) * vector
+    return len / math.max(vec:magnitude(),len) * vec
 
 end
 
@@ -321,28 +325,26 @@ function Vector3.__add(a,b)
     if isVector3(b) and not isVector3(a) then a,b = b,a end
 
     if isVector3(b) then
-        return a:addVector(b)
+        return a:addVector3(b)
     elseif isMatrix3(b) then
-        return a:addMatrix(b)
+        return a:addMatrix3(b)
     else
         error("Attempt to perform arithmetic between Vector3 and "..type(b))
     end
 
 end
 
-function Vector3.addVector(a,b)
+function Vector3.addVector3(a,b)
 
-    local out = Vector3()
-
-    for i=1,#a do
-        out[i] = a[i] + b[i]
-    end
-
-    return out
+    return Vector3(
+        a.x + b.x,
+        a.y + b.y,
+        a.z + b.z
+    )
 
 end
 
-function Vector3.addMatrix(vec,mat)
+function Vector3.addMatrix3(vec,mat)
     
     return Vector3(
         vec.x + mat.r1c1 + vec.y + mat.r2c1 + vec.z + mat.r3c1,
@@ -357,28 +359,26 @@ function Vector3.__sub(a,b)
     if isVector3(b) and not isVector3(a) then a,b = b,a end
 
     if isVector3(b) then
-        return a:subVector(b)
+        return a:subVector3(b)
     elseif isMatrix3(b) then
-        return a:subMatrix(b)
+        return a:subMatrix3(b)
     else
         error("Attempt to perform arithmetic between Vector3 and "..type(b))
     end
 
 end
 
-function Vector3.subVector(a,b)
+function Vector3.subVector3(a,b)
 
-    local out = Vector3()
-
-    for i=1,#a do
-        out[i] = a[i] - b[i]
-    end
-
-    return out
+    return Vector3(
+        a.x - b.x,
+        a.y - b.y,
+        a.z - b.z
+    )
 
 end
 
-function Vector3.subMatrix(vec,mat)
+function Vector3.subMatrix3(vec,mat)
     
     return Vector3(
         vec.x - mat.r1c1 + vec.y - mat.r2c1 + vec.z - mat.r3c1,
@@ -395,40 +395,36 @@ function Vector3.__mul(a,b)
     if type(b) == "number" then
         return a:mulNumber(b)
     elseif isVector3(b) then
-        return a:mulVector(b)
+        return a:mulVector3(b)
     elseif isMatrix3(b) then
-        return a:mulMatrix(b)
+        return a:mulMatrix3(b)
     else
         error("Attempt to perform arithmetic between Vector3 and "..type(b))
     end
 
 end
 
-function Vector3.mulNumber(vector,scalar)
+function Vector3.mulNumber(vec,scalar)
 
-    local out = Vector3()
-
-    for i=1,#vector do
-        out[i] = vector[i] * scalar
-    end
-
-    return out
+    return Vector3(
+        vec.x * scalar,
+        vec.y * scalar,
+        vec.z * scalar
+    )
 
 end
 
-function Vector3.mulVector(a,b)
+function Vector3.mulVector3(a,b)
 
-    local out = Vector3()
-
-    for i=1,#a do
-        out[i] = a[i] * b[i]
-    end
-
-    return out
+    return Vector3(
+        a.x * b.x,
+        a.y * b.y,
+        a.z * b.z
+    )
 
 end
 
-function Vector3.mulMatrix(vec,mat)
+function Vector3.mulMatrix3(vec,mat)
 
     return Vector3(
         vec.x * mat.r1c1 + vec.y * mat.r2c1 + vec.z * mat.r3c1,
@@ -445,40 +441,36 @@ function Vector3.__div(a,b)
     if type(b) == "number" then
         return a:divNumber(b)
     elseif isVector3(b) then
-        return a:divVector(b)
+        return a:divVector3(b)
     elseif isMatrix3(b) then
-        return a:divMatrix(b)
+        return a:divMatrix3(b)
     else
         error("Attempt to perform arithmetic between Vector3 and "..type(b))
     end
 
 end
 
-function Vector3.divNumber(vector,scalar)
+function Vector3.divNumber(vec,scalar)
 
-    local out = Vector3()
-
-    for i=1,#vector do
-        out[i] = vector[i] / scalar
-    end
-
-    return out
+    return Vector3(
+        vec.x / scalar,
+        vec.y / scalar,
+        vec.z / scalar
+    )
 
 end
 
-function Vector3.divVector(a,b)
+function Vector3.divVector3(a,b)
 
-    local out = Vector3()
-
-    for i=1,#a do
-        out[i] = a[i] / b[i]
-    end
-
-    return out
+    return Vector3(
+        a.x / b.x,
+        a.y / b.y,
+        a.z / b.z
+    )
 
 end
 
-function Vector3.divMatrix(vec,mat)
+function Vector3.divMatrix3(vec,mat)
     
     return Vector3(
         vec.x / mat.r1c1 + vec.y / mat.r2c1 + vec.z / mat.r3c1,
@@ -495,40 +487,36 @@ function Vector3.__mod(a,b)
     if type(b) == "number" then
         return a:modNumber(b)
     elseif isVector3(b) then
-        return a:modVector(b)
+        return a:modVector3(b)
     elseif isMatrix3(b) then
-        return a:modMatrix(b)
+        return a:modMatrix3(b)
     else
         error("Attempt to perform arithmetic between Vector3 and "..type(b))
     end
 
 end
 
-function Vector3.modNumber(vector,modulus)
+function Vector3.modNumber(vec,modulus)
 
-    local out = Vector3()
-
-    for i=1,#vector do
-        out[i] = vector[i] % modulus
-    end
-
-    return out
+    return Vector3(
+        vec.x % modulus,
+        vec.y % modulus,
+        vec.z % modulus
+    )
 
 end
 
-function Vector3.modVector(a,b)
+function Vector3.modVector3(a,b)
 
-    local out = Vector3()
-
-    for i=1,#a do
-        out[i] = a[i] % b[i]
-    end
-
-    return out
+    return Vector3(
+        a.x % b.x,
+        a.y % b.y,
+        a.z % b.z
+    )
 
 end
 
-function Vector3.modMatrix(vec,mat)
+function Vector3.modMatrix3(vec,mat)
     
     return Vector3(
         vec.x % mat.r1c1 + vec.y % mat.r2c1 + vec.z % mat.r3c1,
@@ -545,40 +533,36 @@ function Vector3.__pow(a,b)
     if type(b) == "number" then
         return a:powNumber(b)
     elseif isVector3(b) then
-        return a:powVector(b)
+        return a:powVector3(b)
     elseif isMatrix3(b) then
-        return a:powMatrix(b)
+        return a:powMatrix3(b)
     else
         error("Attempt to perform arithmetic between Vector3 and "..type(b))
     end
 
 end
 
-function Vector3.powNumber(vector,factor)
+function Vector3.powNumber(vec,factor)
 
-    local out = Vector3()
-
-    for i=1,#vector do
-        out[i] = vector[i] ^ factor
-    end
-
-    return out
+    return Vector3(
+        vec.x ^ factor,
+        vec.y ^ factor,
+        vec.z ^ factor
+    )
 
 end
 
-function Vector3.powVector(a,b)
+function Vector3.powVector3(a,b)
 
-    local out = Vector3()
-
-    for i=1,#a do
-        out[i] = a[i] ^ b[i]
-    end
-
-    return out
+    return Vector3(
+        a.x ^ b.x,
+        a.y ^ b.y,
+        a.z ^ b.z
+    )
 
 end
 
-function Vector3.powMatrix(vec,mat)
+function Vector3.powMatrix3(vec,mat)
     
     return Vector3(
         vec.x ^ mat.r1c1 + vec.y ^ mat.r2c1 + vec.z ^ mat.r3c1,
@@ -588,30 +572,21 @@ function Vector3.powMatrix(vec,mat)
 
 end
 
-function Vector3.__unm(vector)
+function Vector3.__unm(vec)
 
-    local out = Vector3()
-
-    for i=1,#vector do
-        out[i] = -vector[i]
-    end
-
-    return out
+    return Vector3(
+        -vec.x,
+        -vec.y,
+        -vec.z
+    )
 
 end
 
 function Vector3.__eq(a,b)
 
-    if not (isVector3(a) and isVector3(b)) then
-        return false
-    end
-
-    for i=1,#a do
-        if not (a[i] == b[i]) then
-            return false
-        end
-    end
-
-    return true
+    return isVector3(a) and isVector3(b)
+    and a.x == b.x
+    and a.y == b.y
+    and a.z == b.z
 
 end
