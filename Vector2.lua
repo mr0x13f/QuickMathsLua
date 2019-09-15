@@ -83,9 +83,9 @@ end
 --                                METHODS
 ------------------------------------------------------------------------
 
-function Vector2.unpack(v)
+function Vector2.unpack(vec)
 
-    return v.x, v.y
+    return vec.x, vec.y
 
 end
 

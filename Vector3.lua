@@ -130,9 +130,9 @@ function Vector3.toHex(vector)
 
 end
 
-function Vector3.unpack(v)
+function Vector3.unpack(vec)
 
-    return v.x, v.y, v.z
+    return vec.x, vec.y, vec.z
 
 end
 
