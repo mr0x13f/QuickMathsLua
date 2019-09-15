@@ -364,16 +364,16 @@ function Matrix4.__mul(a,b)
     if isMatrix4(b) and not isMatrix4(a) then a,b = b,a end
 
     if isMatrix4(b) then
-        return a:mulMatrix(b)
+        return a:mulMatrix4(b)
     elseif isVector4(b) then
-        return Vector4.mulMatrix(b,a)
+        return Vector4.mulMatrix4(b,a)
     else
         error("Attempt to perform arithmetic between Matrix4 and "..type(b))
     end
 
 end
 
-function Matrix4.mulMatrix(a,b)
+function Matrix4.mulMatrix4(a,b)
     
     local out = Matrix4()
 
