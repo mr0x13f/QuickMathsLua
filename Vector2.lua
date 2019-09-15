@@ -85,70 +85,65 @@ end
 
 function Vector2.unpack(v)
 
-    return v[1], v[2]
+    return v.x, v.y
 
 end
 
-function Vector2.floor(vector)
-
-    local out = Vector2()
-
-    for i=1,#vector do
-        out[i] = math.floor(vector[i])
-    end
-
-    return out
+function Vector2.abs()
 
 end
 
-function Vector2.ceil(vector)
+function Vector2.floor(vec)
 
-    local out = Vector2()
-
-    for i=1,#vector do
-        out[i] = math.ceil(vector[i])
-    end
-
-    return out
+    return Vector2(
+        math.floor(vec.x),
+        math.floor(vec.y)
+    )
 
 end
 
-function Vector2.clamp(vector, min, max)
+function Vector2.ceil(vec)
 
-    if not min then min = vector end
-    if not max then max = vector end
-
-    local out = Vector2()
-
-    for i=1,#vector do
-        out[i] = math.max(math.min(vector[i], max[i]), min[i])
-    end
-
-    return out
+    return Vector2(
+        math.ceil(vec.x),
+        math.ceil(vec.y)
+    )
 
 end
 
-function Vector2.angle(vector)
+function Vector2.clamp(vec, min, max)
 
-    return math.atan2(vector.y, vector.x)
+    if not min then min = vec end
+    if not max then max = vec end
+
+    return Vector2(
+        math.max(math.min(vec.x, max.x), min.x),
+        math.max(math.min(vec.y, max.y), min.y)
+    )
+
+end
+
+function Vector2.angle(vec)
+
+    return math.atan2(vec.y, vec.x)
     
 end
 
-function Vector2.rotate(vector, angle)
+function Vector2.rotate(vec, angle)
 
-    return vector * Matrix2.fromRotation(angle)
-
-end
-
-function Vector2.magnitude(vector)
-
-    return math.sqrt(vector.x^2 + vector.y^2)
+    return vec * Matrix2.fromRotation(angle)
 
 end
 
-function Vector2.magnitude2(vector)
+function Vector2.magnitude(vec)
 
-    return vector.x^2 + vector.y^2
+    return math.sqrt(vec.x^2 + vec.y^2)
+
+end
+
+function Vector2.magnitude2(vec)
+
+    return vec.x^2 + vec.y^2
 
 end
 
@@ -164,20 +159,20 @@ function Vector2.distance2(a,b)
 
 end
 
-function Vector2.normalize(vector)
+function Vector2.normalize(vec)
 
-    if vector:magnitude2() == 0 then return vector end
+    if vec:magnitude2() == 0 then return vec end
 
-    return 1/vector:magnitude() * vector
+    return 1/vec:magnitude() * vec
 
 end
 
-function Vector2.trim(vector, len)
+function Vector2.trim(vec, len)
 
-    if vector:magnitude2() == 0 then return vector end
+    if vec:magnitude2() == 0 then return vec end
     if len < 0 then len = -len end
 
-    return len / math.max(vector:magnitude(),len) * vector
+    return len / math.max(vec:magnitude(),len) * vec
 
 end
 
@@ -262,28 +257,25 @@ function Vector2.__add(a,b)
     if isVector2(b) and not isVector2(a) then a,b = b,a end
 
     if isVector2(b) then
-        return a:addVector(b)
+        return a:addVector2(b)
     elseif isMatrix2(b) then
-        return a:addMatrix(b)
+        return a:addMatrix2(b)
     else
         error("Attempt to perform arithmetic between Vector2 and "..type(b))
     end
 
 end
 
-function Vector2.addVector(a,b)
+function Vector2.addVector2(a,b)
 
-    local out = Vector2()
-
-    for i=1,#a do
-        out[i] = a[i] + b[i]
-    end
-
-    return out
+    return Vector2(
+        a.x + b.x,
+        a.y + b.y
+    )
 
 end
 
-function Vector2.addMatrix(vec,mat)
+function Vector2.addMatrix2(vec,mat)
     
     return Vector2(
         vec.x + mat.r1c1 + vec.y + mat.r2c1,
@@ -297,28 +289,25 @@ function Vector2.__sub(a,b)
     if isVector2(b) and not isVector2(a) then a,b = b,a end
 
     if isVector2(b) then
-        return a:subVector(b)
+        return a:subVector2(b)
     elseif isMatrix2(b) then
-        return a:subMatrix(b)
+        return a:subMatrix2(b)
     else
         error("Attempt to perform arithmetic between Vector2 and "..type(b))
     end
 
 end
 
-function Vector2.subVector(a,b)
+function Vector2.subVector2(a,b)
 
-    local out = Vector2()
-
-    for i=1,#a do
-        out[i] = a[i] - b[i]
-    end
-
-    return out
+    return Vector2(
+        a.x - b.x,
+        a.y - b.y
+    )
 
 end
 
-function Vector2.subMatrix(vec,mat)
+function Vector2.subMatrix2(vec,mat)
     
     return Vector2(
         vec.x - mat.r1c1 + vec.y - mat.r2c1,
@@ -334,40 +323,34 @@ function Vector2.__mul(a,b)
     if type(b) == "number" then
         return a:mulNumber(b)
     elseif isVector2(b) then
-        return a:mulVector(b)
+        return a:mulVector2(b)
     elseif isMatrix2(b) then
-        return a:mulMatrix(b)
+        return a:mulMatrix2(b)
     else
         error("Attempt to perform arithmetic between Vector2 and "..type(b))
     end
 
 end
 
-function Vector2.mulNumber(vector,scalar)
+function Vector2.mulNumber(vec,scalar)
 
-    local out = Vector2()
-
-    for i=1,#vector do
-        out[i] = vector[i] * scalar
-    end
-
-    return out
+    return Vector2(
+        vec.x * scalar,
+        vec.y * scalar
+    )
 
 end
 
-function Vector2.mulVector(a,b)
+function Vector2.mulVector2(a,b)
 
-    local out = Vector2()
-
-    for i=1,#a do
-        out[i] = a[i] * b[i]
-    end
-
-    return out
+    return Vector2(
+        a.x * b.x,
+        a.y * b.y
+    )
 
 end
 
-function Vector2.mulMatrix(vec,mat)
+function Vector2.mulMatrix2(vec,mat)
     
     return Vector2(
         vec.x * mat.r1c1 + vec.y * mat.r2c1,
@@ -383,40 +366,34 @@ function Vector2.__div(a,b)
     if type(b) == "number" then
         return a:divNumber(b)
     elseif isVector2(b) then
-        return a:divVector(b)
+        return a:divVector2(b)
     elseif isMatrix2(b) then
-        return a:divMatrix(b)
+        return a:divMatrix2(b)
     else
         error("Attempt to perform arithmetic between Vector2 and "..type(b))
     end
 
 end
 
-function Vector2.divNumber(vector,scalar)
+function Vector2.divNumber(vec,scalar)
 
-    local out = Vector2()
-
-    for i=1,#vector do
-        out[i] = vector[i] / scalar
-    end
-
-    return out
+    return Vector2(
+        vec.x / scalar,
+        vec.y / scalar
+    )
 
 end
 
-function Vector2.divVector(a,b)
+function Vector2.divVector2(a,b)
 
-    local out = Vector2()
-
-    for i=1,#a do
-        out[i] = a[i] / b[i]
-    end
-
-    return out
+    return Vector2(
+        a.x / b.x,
+        a.y / b.y
+    )
 
 end
 
-function Vector2.divMatrix(vec,mat)
+function Vector2.divMatrix2(vec,mat)
     
     return Vector2(
         vec.x / mat.r1c1 + vec.y / mat.r2c1,
@@ -432,45 +409,40 @@ function Vector2.__mod(a,b)
     if type(b) == "number" then
         return a:modNumber(b)
     elseif isVector2(b) then
-        return a:modVector(b)
+        return a:modVector2(b)
     elseif isMatrix2(b) then
-        return a:modMatrix(b)
+        return a:modMatrix2(b)
     else
         error("Attempt to perform arithmetic between Vector2 and "..type(b))
     end
 
 end
 
-function Vector2.modNumber(vector,modulus)
+function Vector2.modNumber(vec,modulus)
 
-    local out = Vector2()
-
-    for i=1,#vector do
-        out[i] = vector[i] % modulus
-    end
-
-    return out
+    return Vector2(
+        vec.x % modulus,
+        vec.y % modulus
+    )
 
 end
 
-function Vector2.modVector(a,b)
+function Vector2.modVector2(a,b)
 
-    local out = Vector2()
-
-    for i=1,#a do
-        out[i] = a[i] % b[i]
-    end
-
-    return out
+    return Vector2(
+        a.x % b.x,
+        a.y % b.y
+    )
 
 end
 
-function Vector2.modMatrix(vec,mat)
+function Vector2.modMatrix2(vec,mat)
     
     return Vector2(
         vec.x % mat.r1c1 + vec.y % mat.r2c1,
         vec.x % mat.r1c2 + vec.y % mat.r2c2
     )
+
 end
 
 function Vector2.__pow(a,b)
@@ -480,40 +452,34 @@ function Vector2.__pow(a,b)
     if type(b) == "number" then
         return a:powNumber(b)
     elseif isVector2(b) then
-        return a:powVector(b)
+        return a:powVector2(b)
     elseif isMatrix2(b) then
-        return a:powMatrix(b)
+        return a:powMatrix2(b)
     else
         error("Attempt to perform arithmetic between Vector2 and "..type(b))
     end
 
 end
 
-function Vector2.powNumber(vector,factor)
+function Vector2.powNumber(vec,factor)
 
-    local out = Vector2()
-
-    for i=1,#vector do
-        out[i] = vector[i] ^ factor
-    end
-
-    return out
+    return Vector2(
+        vec.x ^ factor,
+        vec.y ^ factor
+    )
 
 end
 
-function Vector2.powVector(a,b)
+function Vector2.powVector2(a,b)
 
-    local out = Vector2()
-
-    for i=1,#a do
-        out[i] = a[i] ^ b[i]
-    end
-
-    return out
+    return Vector2(
+        a.x ^ b.x,
+        a.y ^ b.y
+    )
 
 end
 
-function Vector2.powMatrix(vec,mat)
+function Vector2.powMatrix2(vec,mat)
 
     return Vector2(
         vec.x ^ mat.r1c1 + vec.y ^ mat.r2c1,
@@ -522,30 +488,19 @@ function Vector2.powMatrix(vec,mat)
 
 end
 
-function Vector2.__unm(vector)
+function Vector2.__unm(vev)
 
-    local out = Vector2()
-
-    for i=1,#vector do
-        out[i] = -vector[i]
-    end
-
-    return out
+    return Vector2(
+        -vec.x,
+        -vec.y
+    )
 
 end
 
 function Vector2.__eq(a,b)
 
-    if not (isVector2(a) and isVector2(b)) then
-        return false
-    end
-
-    for i=1,#a do
-        if not (a[i] == b[i]) then
-            return false
-        end
-    end
-
-    return true
+    return isVector2(a) and isVector2(b)
+    and a.x == b.x
+    and a.y == b.y
 
 end
