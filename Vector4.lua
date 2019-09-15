@@ -132,48 +132,56 @@ function Vector4.toHex(vector)
 
 end
 
-function Vector4.unpack(v)
+function Vector4.unpack(vec)
 
-    return v[1], v[2], v[3], v[4]
-
-end
-
-function Vector4.floor(vector)
-
-    local out = Vector4()
-
-    for i=1,#vector do
-        out[i] = math.floor(vector[i])
-    end
-
-    return out
+    return vec.x, vec.y, vec.z, vec.w
 
 end
 
-function Vector4.ceil(vector)
+function Vector4.abs(vec)
 
-    local out = Vector4()
-
-    for i=1,#vector do
-        out[i] = math.ceil(vector[i])
-    end
-
-    return out
+    return Vector4(
+        math.abs(vec.x),
+        math.abs(vec.y),
+        math.abs(vec.z),
+        math.abs(vec.w)
+    )
 
 end
 
-function Vector4.clamp(vector, min, max)
+function Vector4.floor(vec)
 
-    if not min then min = vector end
-    if not max then max = vector end
+    return Vector4(
+        math.floor(vec.x),
+        math.floor(vec.y),
+        math.floor(vec.z),
+        math.floor(vec.w)
+    )
 
-    local out = Vector4()
+end
 
-    for i=1,#vector do
-        out[i] = math.max(math.min(vector[i], max[i]), min[i])
-    end
+function Vector4.ceil(vec)
 
-    return out
+    return Vector4(
+        math.ceil(vec.x),
+        math.ceil(vec.y),
+        math.ceil(vec.z),
+        math.ceil(vec.w)
+    )
+
+end
+
+function Vector4.clamp(vec, min, max)
+
+    if not min then min = vec end
+    if not max then max = vec end
+
+    return Vector4(
+        math.max(math.min(vec.x, max.x), min.x),
+        math.max(math.min(vec.y, max.y), min.y),
+        math.max(math.min(vec.z, max.z), min.z),
+        math.max(math.min(vec.w, max.w), min.w)
+    )
 
 end
 
@@ -246,28 +254,27 @@ function Vector4.__add(a,b)
     if isVector4(b) and not isVector4(a) then a,b = b,a end
 
     if isVector4(b) then
-        return a:addVector(b)
+        return a:addVector4(b)
     elseif isMatrix4(b) then
-        return a:addMatrix(b)
+        return a:addMatrix4(b)
     else
         error("Attempt to perform arithmetic between Vector4 and "..type(b))
     end
 
 end
 
-function Vector4.addVector(a,b)
+function Vector4.addVector4(a,b)
 
-    local out = Vector4()
-
-    for i=1,#a do
-        out[i] = a[i] + b[i]
-    end
-
-    return out
+    return Vector4(
+        a.x + b.x,
+        a.y + b.y,
+        a.z + b.z,
+        a.w + b.w
+    )
 
 end
 
-function Vector4.addMatrix(vec,mat)
+function Vector4.addMatrix4(vec,mat)
     
     return Vector4(
         vec.x + mat.r1c1 + vec.y + mat.r2c1 + vec.z + mat.r3c1 + vec.w + mat.r4c1,
@@ -283,28 +290,27 @@ function Vector4.__sub(a,b)
     if isVector4(b) and not isVector4(a) then a,b = b,a end
 
     if isVector4(b) then
-        return a:subVector(b)
+        return a:subVector4(b)
     elseif isMatrix4(b) then
-        return a:subMatrix(b)
+        return a:subMatrix4(b)
     else
         error("Attempt to perform arithmetic between Vector4 and "..type(b))
     end
 
 end
 
-function Vector4.subVector(a,b)
+function Vector4.subVector4(a,b)
 
-    local out = Vector4()
-
-    for i=1,#a do
-        out[i] = a[i] - b[i]
-    end
-
-    return out
+    return Vector4(
+        a.x - b.x,
+        a.y - b.y,
+        a.z - b.z,
+        a.w - b.w
+    )
 
 end
 
-function Vector4.subMatrix(vec,mat)
+function Vector4.subMatrix4(vec,mat)
     
     return Vector4(
         vec.x - mat.r1c1 + vec.y - mat.r2c1 + vec.z - mat.r3c1 + vec.w - mat.r4c1,
@@ -322,40 +328,38 @@ function Vector4.__mul(a,b)
     if type(b) == "number" then
         return a:mulNumber(b)
     elseif isVector4(b) then
-        return a:mulVector(b)
+        return a:mulVector4(b)
     elseif isMatrix4(b) then
-        return a:mulMatrix(b)
+        return a:mulMatrix4(b)
     else
         error("Attempt to perform arithmetic between Vector4 and "..type(b))
     end
 
 end
 
-function Vector4.mulNumber(vector,scalar)
+function Vector4.mulNumber(vec,scalar)
 
-    local out = Vector4()
-
-    for i=1,#vector do
-        out[i] = vector[i] * scalar
-    end
-
-    return out
-
-end
-
-function Vector4.mulVector(a,b)
-
-    local out = Vector4()
-
-    for i=1,#a do
-        out[i] = a[i] * b[i]
-    end
-
-    return out
+    return Vector4(
+        vec.x * scalar,
+        vec.y * scalar,
+        vec.z * scalar,
+        vec.w * scalar
+    )
 
 end
 
-function Vector4.mulMatrix(vec,mat)
+function Vector4.mulVector4(a,b)
+
+    return Vector4(
+        a.x * b.x,
+        a.y * b.y,
+        a.z * b.z,
+        a.w * b.w
+    )
+
+end
+
+function Vector4.mulMatrix4(vec,mat)
     
     return Vector4(
         vec.x * mat.r1c1 + vec.y * mat.r2c1 + vec.z * mat.r3c1 + vec.w * mat.r4c1,
@@ -373,40 +377,38 @@ function Vector4.__div(a,b)
     if type(b) == "number" then
         return a:divNumber(b)
     elseif isVector4(b) then
-        return a:divVector(b)
+        return a:divVector4(b)
     elseif isMatrix4(b) then
-        return a:divMatrix(b)
+        return a:divMatrix4(b)
     else
         error("Attempt to perform arithmetic between Vector4 and "..type(b))
     end
 
 end
 
-function Vector4.divNumber(vector,scalar)
+function Vector4.divNumber(vec,scalar)
 
-    local out = Vector4()
-
-    for i=1,#vector do
-        out[i] = vector[i] / scalar
-    end
-
-    return out
-
-end
-
-function Vector4.divVector(a,b)
-
-    local out = Vector4()
-
-    for i=1,#a do
-        out[i] = a[i] / b[i]
-    end
-
-    return out
+    return Vector4(
+        vec.x / scalar,
+        vec.y / scalar,
+        vec.z / scalar,
+        vec.w / scalar
+    )
 
 end
 
-function Vector4.divMatrix(vec,mat)
+function Vector4.divVector4(a,b)
+
+    return Vector4(
+        a.x / b.x,
+        a.y / b.y,
+        a.z / b.z,
+        a.w / b.w
+    )
+
+end
+
+function Vector4.divMatrix4(vec,mat)
     
     return Vector4(
         vec.x / mat.r1c1 + vec.y / mat.r2c1 + vec.z / mat.r3c1 + vec.w / mat.r4c1,
@@ -424,40 +426,38 @@ function Vector4.__mod(a,b)
     if type(b) == "number" then
         return a:modNumber(b)
     elseif isVector4(b) then
-        return a:modVector(b)
+        return a:modVector4(b)
     elseif isMatrix4(b) then
-        return a:modMatrix(b)
+        return a:modMatrix4(b)
     else
         error("Attempt to perform arithmetic between Vector4 and "..type(b))
     end
 
 end
 
-function Vector4.modNumber(vector,modulus)
+function Vector4.modNumber(vec,modulus)
 
-    local out = Vector4()
-
-    for i=1,#vector do
-        out[i] = vector[i] % modulus
-    end
-
-    return out
-
-end
-
-function Vector4.modVector(a,b)
-
-    local out = Vector4()
-
-    for i=1,#a do
-        out[i] = a[i] % b[i]
-    end
-
-    return out
+    return Vector4(
+        vec.x % modulus,
+        vec.y % modulus,
+        vec.z % modulus,
+        vec.w % modulus
+    )
 
 end
 
-function Vector4.modMatrix(vec,mat)
+function Vector4.modVector4(a,b)
+
+    return Vector4(
+        a.x % b.x,
+        a.y % b.y,
+        a.z % b.z,
+        a.w % b.w
+    )
+
+end
+
+function Vector4.modMatrix4(vec,mat)
     
     return Vector4(
         vec.x % mat.r1c1 + vec.y % mat.r2c1 + vec.z % mat.r3c1 + vec.w % mat.r4c1,
@@ -475,40 +475,38 @@ function Vector4.__pow(a,b)
     if type(b) == "number" then
         return a:powNumber(b)
     elseif isVector4(b) then
-        return a:powVector(b)
+        return a:powVector4(b)
     elseif isMatrix4(b) then
-        return a:powMatrix(b)
+        return a:powMatrix4(b)
     else
         error("Attempt to perform arithmetic between Vector4 and "..type(b))
     end
 
 end
 
-function Vector4.powNumber(vector,factor)
+function Vector4.powNumber(vec,factor)
 
-    local out = Vector4()
-
-    for i=1,#vector do
-        out[i] = vector[i] ^ factor
-    end
-
-    return out
-
-end
-
-function Vector4.powVector(a,b)
-
-    local out = Vector4()
-
-    for i=1,#a do
-        out[i] = a[i] ^ b[i]
-    end
-
-    return out
+    return Vector4(
+        vec.x ^ factor,
+        vec.y ^ factor,
+        vec.z ^ factor,
+        vec.w ^ factor
+    )
 
 end
 
-function Vector4.powMatrix(vec,mat)
+function Vector4.powVector4(a,b)
+
+    return Vector4(
+        a.x ^ b.x,
+        a.y ^ b.y,
+        a.z ^ b.z,
+        a.w ^ b.w
+    )
+
+end
+
+function Vector4.powMatrix4(vec,mat)
     
     return Vector4(
         vec.x ^ mat.r1c1 + vec.y ^ mat.r2c1 + vec.z ^ mat.r3c1 + vec.w ^ mat.r4c1,
@@ -519,30 +517,23 @@ function Vector4.powMatrix(vec,mat)
 
 end
 
-function Vector4.__unm(vector)
+function Vector4.__unm(vec)
 
-    local out = Vector4()
-
-    for i=1,#vector do
-        out[i] = -vector[i]
-    end
-
-    return out
+    return Vector4(
+        -vec.x,
+        -vec.y,
+        -vec.z,
+        -vec.w
+    )
 
 end
 
 function Vector4.__eq(a,b)
 
-    if not (isVector4(a) and isVector4(b)) then
-        return false
-    end
-
-    for i=1,#a do
-        if not (a[i] == b[i]) then
-            return false
-        end
-    end
-
-    return true
+    return isVector4(a) and isVector4(b)
+    and a.x == b.x
+    and a.y == b.y
+    and a.z == b.z
+    and a.w == b.w
 
 end
