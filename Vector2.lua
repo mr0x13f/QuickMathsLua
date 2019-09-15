@@ -89,7 +89,12 @@ function Vector2.unpack(v)
 
 end
 
-function Vector2.abs()
+function Vector2.abs(vec)
+
+    return Vector2(
+        math.abs(vec.x),
+        math.abs(vec.y)
+    )
 
 end
 
