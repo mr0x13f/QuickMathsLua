@@ -163,12 +163,23 @@ function Matrix4.fromTransform(pos, rot, scale)
 
     local out = Matrix4()
 
+    if pos then out = out * Matrix4.fromPosition(pos) end
     if scale then out = out * Matrix4.fromScale(scale) end
     if rot then out = out * Matrix4.fromRotation(rot) end
-    if pos then out = out * Matrix4.fromPosition(pos) end
 
     return out
 
+end
+
+function Matrix4.fromView(pos, rot)
+
+    local out = Matrix4()
+
+    if rot then out = out * Matrix4.fromRotation(rot) end
+    if pos then out = out * Matrix4.fromPosition(-pos) end
+
+    return out
+    
 end
 
 function Matrix4.fromPerspective(fov, ratio, near, far)
@@ -386,26 +397,27 @@ end
 
 function Matrix4.mulMatrix4(a,b)
     
-    local out = Matrix4()
+    return Matrix4(
+        a.r1c1*b.r1c1 + a.r1c2*b.r2c1 + a.r1c3*b.r3c1 + a.r1c4*b.r4c1,
+        a.r1c1*b.r1c2 + a.r1c2*b.r2c2 + a.r1c3*b.r3c2 + a.r1c4*b.r4c2,
+        a.r1c1*b.r1c3 + a.r1c2*b.r2c3 + a.r1c3*b.r3c3 + a.r1c4*b.r4c3,
+        a.r1c1*b.r1c4 + a.r1c2*b.r2c4 + a.r1c3*b.r3c4 + a.r1c4*b.r4c4,
 
-	out[1] = a[1] * b[1] + a[5] * b[2] + a[9] * b[3] + a[13] * b[4]
-	out[5] = a[1] * b[5] + a[5] * b[6] + a[9] * b[7] + a[13] * b[8]
-	out[9] = a[1] * b[9] + a[5] * b[10] + a[9] * b[11] + a[13] * b[12]
-	out[13] = a[1] * b[13] + a[5] * b[14] + a[9] * b[15] + a[13] * b[16]
-	out[2] = a[2] * b[1] + a[6] * b[2] + a[10] * b[3] + a[14] * b[4]
-	out[6] = a[2] * b[5] + a[6] * b[6] + a[10] * b[7] + a[14] * b[8]
-	out[10] = a[2] * b[9] + a[6] * b[10] + a[10] * b[11] + a[14] * b[12]
-	out[14] = a[2] * b[13] + a[6] * b[14] + a[10] * b[15] + a[14] * b[16]
-	out[3] = a[3] * b[1] + a[7] * b[2] + a[11] * b[3] + a[15] * b[4]
-	out[7] = a[3] * b[5] + a[7] * b[6] + a[11] * b[7] + a[15] * b[8]
-	out[11] = a[3] * b[9] + a[7] * b[10] + a[11] * b[11] + a[15] * b[12]
-	out[15] = a[3] * b[13] + a[7] * b[14] + a[11] * b[15] + a[15] * b[16]
-	out[4] = a[4] * b[1] + a[8] * b[2] + a[12] * b[3] + a[16] * b[4]
-	out[8] = a[4] * b[5] + a[8] * b[6] + a[12] * b[7] + a[16] * b[8]
-	out[12] = a[4] * b[9] + a[8] * b[10] + a[12] * b[11] + a[16] * b[12]
-	out[16] = a[4] * b[13] + a[8] * b[14] + a[12] * b[15] + a[16] * b[16]
+        a.r2c1*b.r1c1 + a.r2c2*b.r2c1 + a.r2c3*b.r3c1 + a.r2c4*b.r4c1,
+        a.r2c1*b.r1c2 + a.r2c2*b.r2c2 + a.r2c3*b.r3c2 + a.r2c4*b.r4c2,
+        a.r2c1*b.r1c3 + a.r2c2*b.r2c3 + a.r2c3*b.r3c3 + a.r2c4*b.r4c3,
+        a.r2c1*b.r1c4 + a.r2c2*b.r2c4 + a.r2c3*b.r3c4 + a.r2c4*b.r4c4,
 
-    return out
+        a.r3c1*b.r1c1 + a.r3c2*b.r2c1 + a.r3c3*b.r3c1 + a.r3c4*b.r4c1,
+        a.r3c1*b.r1c2 + a.r3c2*b.r2c2 + a.r3c3*b.r3c2 + a.r3c4*b.r4c2,
+        a.r3c1*b.r1c3 + a.r3c2*b.r2c3 + a.r3c3*b.r3c3 + a.r3c4*b.r4c3,
+        a.r3c1*b.r1c4 + a.r3c2*b.r2c4 + a.r3c3*b.r3c4 + a.r3c4*b.r4c4,
+
+        a.r4c1*b.r1c1 + a.r4c2*b.r2c1 + a.r4c3*b.r3c1 + a.r4c4*b.r4c1,
+        a.r4c1*b.r1c2 + a.r4c2*b.r2c2 + a.r4c3*b.r3c2 + a.r4c4*b.r4c2,
+        a.r4c1*b.r1c3 + a.r4c2*b.r2c3 + a.r4c3*b.r3c3 + a.r4c4*b.r4c3,
+        a.r4c1*b.r1c4 + a.r4c2*b.r2c4 + a.r4c3*b.r3c4 + a.r4c4*b.r4c4
+    )
 
 end
 
