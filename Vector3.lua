@@ -136,6 +136,17 @@ function Vector3.unpack(vec)
 
 end
 
+local tmp = {}
+function Vector3.send(vec)
+
+    for i=1,#vec do
+        tmp[i] = vec[i]
+    end
+
+    return tmp
+
+end
+
 function Vector3.abs(vec)
 
     return Vector3(

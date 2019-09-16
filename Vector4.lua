@@ -138,6 +138,17 @@ function Vector4.unpack(vec)
 
 end
 
+local tmp = {}
+function Vector4.send(vec)
+
+    for i=1,#vec do
+        tmp[i] = vec[i]
+    end
+
+    return tmp
+
+end
+
 function Vector4.abs(vec)
 
     return Vector4(

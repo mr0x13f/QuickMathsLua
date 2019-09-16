@@ -227,6 +227,17 @@ function Matrix4.unpack(m)
 
 end
 
+local tmp = {}
+function Matrix4.send(mat)
+
+    for i=1,#mat do
+        tmp[i] = mat[i]
+    end
+
+    return tmp
+
+end
+
 function Matrix4.invert(matrix)
 
     local out = Matrix4()

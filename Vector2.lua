@@ -89,6 +89,17 @@ function Vector2.unpack(vec)
 
 end
 
+local tmp = {}
+function Vector2.send(vec)
+
+    for i=1,#vec do
+        tmp[i] = vec[i]
+    end
+
+    return tmp
+
+end
+
 function Vector2.abs(vec)
 
     return Vector2(

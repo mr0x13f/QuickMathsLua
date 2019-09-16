@@ -117,6 +117,17 @@ function Matrix2.unpack(m)
 
 end
 
+local tmp = {}
+function Matrix2.send(mat)
+
+    for i=1,#mat do
+        tmp[i] = mat[i]
+    end
+
+    return tmp
+
+end
+
 ------------------------------------------------------------------------
 --                                META
 ------------------------------------------------------------------------
