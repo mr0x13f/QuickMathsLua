@@ -72,5 +72,5 @@ love.graphics.setColor(color:unpack())
 
 -- Sending matrices to a shader
 perspective = Matrix4.fromPerspective(90, 16/9, 0.1, 1000)
-shader:send("projection", {projection:unpack()})
+shader:send("projection", projection:send())
 ```
