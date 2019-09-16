@@ -14,7 +14,7 @@ if jit and jit.status() then
     ffi.cdef([[
         typedef union Matrix2
         {
-            double components[4];
+            float components[4];
         } Matrix2;
     ]])
 

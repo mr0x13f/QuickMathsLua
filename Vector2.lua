@@ -13,7 +13,7 @@ if jit and jit.status() then
     ffi.cdef([[
         typedef union Vector2
         {
-            double components[2];
+            float components[2];
         } Vector2;
     ]])
 
