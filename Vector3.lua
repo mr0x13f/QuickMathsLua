@@ -188,6 +188,12 @@ function Vector3.clamp(vec, min, max)
 
 end
 
+function Vector3.translate(vec, pos, rot, scale)
+
+    return vec:rotate(rot) * scale + pos
+
+end
+
 function Vector3.angle(vec)
 
     local out = Vector3()

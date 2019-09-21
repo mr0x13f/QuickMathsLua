@@ -137,6 +137,12 @@ function Vector2.clamp(vec, min, max)
 
 end
 
+function Vector2.translate(vec, pos, rot, scale)
+
+    return vec:rotate(rot) * scale + pos
+
+end
+
 function Vector2.angle(vec)
 
     return math.atan2(vec.y, vec.x)
