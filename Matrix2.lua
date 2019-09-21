@@ -20,8 +20,6 @@ if jit and jit.status() then
 
     ffi.metatype("Matrix2", Matrix2)
 
-else
-    ffi = false
 end
 
 function isMatrix2(matrix)
@@ -74,7 +72,7 @@ function Matrix2.new(...)
     if ffi then
         matrix = ffi.new("Matrix2")
     else
-        matrix = setmetatable({}, Matrix2)
+        matrix = setmetatable({components={}}, Matrix2)
     end
     
     for i=1,#components do

@@ -19,8 +19,6 @@ if jit and jit.status() then
 
     ffi.metatype("Vector2", Vector2)
 
-else
-    ffi = false
 end
 
 function isVector2(vector)
@@ -68,7 +66,7 @@ function Vector2.new(...)
     if ffi then
         vector = ffi.new("Vector2")
     else
-        vector = setmetatable({}, Vector2)
+        vector = setmetatable({components={}}, Vector2)
     end
     
     for i=1,#components do
