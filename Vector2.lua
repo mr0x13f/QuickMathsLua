@@ -139,7 +139,13 @@ end
 
 function Vector2.transform(vec, pos, rot, scale)
 
-    return vec:rotate(rot) * scale + pos
+    local out = vec
+
+    if rot then out = out:rotate(rot) end
+    if scale then out = out * scale end
+    if pos then out = out + pos end
+
+    return out
 
 end
 
