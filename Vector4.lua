@@ -139,7 +139,7 @@ end
 local tmp = {}
 function Vector4.send(vec)
 
-    for i=1,#vec do
+    for i=1,4 do
         tmp[i] = vec[i]
     end
 

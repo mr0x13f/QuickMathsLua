@@ -151,7 +151,7 @@ end
 local tmp = {}
 function Matrix3.send(mat)
 
-    for i=1,#mat do
+    for i=1,9 do
         tmp[i] = mat[i]
     end
 
@@ -242,7 +242,7 @@ function Matrix3.__eq(a,b)
         return false
     end
 
-    for i=1,#a do
+    for i=1,9 do
         if not (a[i] == b[i]) then
             return false
         end

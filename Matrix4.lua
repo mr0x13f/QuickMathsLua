@@ -239,7 +239,7 @@ end
 local tmp = {}
 function Matrix4.send(mat)
 
-    for i=1,#mat do
+    for i=1,16 do
         tmp[i] = mat[i]
     end
 
@@ -274,7 +274,7 @@ function Matrix4.invert(matrix)
 
 	det = 1/det
 
-	for i=1,#matrix do
+	for i=1,16 do
 		out[i] = out[i] * det
 	end
 
@@ -425,7 +425,7 @@ function Matrix4.__eq(a,b)
         return false
     end
 
-    for i=1,#a do
+    for i=1,16 do
         if not (a[i] == b[i]) then
             return false
         end

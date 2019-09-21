@@ -137,7 +137,7 @@ end
 local tmp = {}
 function Vector3.send(vec)
 
-    for i=1,#vec do
+    for i=1,3 do
         tmp[i] = vec[i]
     end
 

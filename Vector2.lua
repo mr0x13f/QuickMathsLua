@@ -90,7 +90,7 @@ end
 local tmp = {}
 function Vector2.send(vec)
 
-    for i=1,#vec do
+    for i=1,2 do
         tmp[i] = vec[i]
     end
 
