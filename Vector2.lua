@@ -137,7 +137,7 @@ function Vector2.clamp(vec, min, max)
 
 end
 
-function Vector2.translate(vec, pos, rot, scale)
+function Vector2.transform(vec, pos, rot, scale)
 
     return vec:rotate(rot) * scale + pos
 

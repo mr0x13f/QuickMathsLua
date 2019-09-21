@@ -188,7 +188,7 @@ function Vector3.clamp(vec, min, max)
 
 end
 
-function Vector3.translate(vec, pos, rot, scale)
+function Vector3.transform(vec, pos, rot, scale)
 
     return vec:rotate(rot) * scale + pos
 
