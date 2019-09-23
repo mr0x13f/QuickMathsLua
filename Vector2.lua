@@ -514,7 +514,7 @@ function Vector2.powMatrix2(vec,mat)
 
 end
 
-function Vector2.__unm(vev)
+function Vector2.__unm(vec)
 
     return Vector2(
         -vec.x,
