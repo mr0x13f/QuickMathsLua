@@ -1,8 +1,24 @@
+
 # QuickMaths
 
 An FFI-supercharged vector library for Lua.
-Made with LÖVE in mind, but should work perfectly find on other frameworks running a similar-enough version of Lua.
-Documentation will be made once everything works properly.
+Made with LÖVE in mind, but should work perfectly fine on other frameworks running a similar-enough version of Lua.
+
+## Post mortem
+
+I don't use Lua anymore for game development because of how much of a pain OOP is, so this whole thing will probably never be updated. This post mortem will serve as some reflection on how this library could have been improved.
+
+The reason this was made was because I wasn't happy with existing vector libraries for lua (CPML to be precise). The goals I had with this library was speed and ease of use. The ease of use was achieved by treating vector objects as throwaway primitives or stack-allocted objects, instead of reusing them. This sacrifices performance but is, in my opinion, much nicer to work with. To make this even slightly feasible memory-wise with how Lua objects work, JIT's C FFI was used to make the vectors C objects.
+
+I'm happy with the ease of use aspect, but the performance was held back by the use of assert(), which I used to enforce some level of strict typing. This might help with debugging, but it sacrifices performance. If I were to remake this, I would leave out the assertions, as performance is very important with vectors. Some of the matrix math might also be wrong, since I'm not good with matrices. I should have written unit tests to make sure the math was right. The library also assumes the use of euler angles for rotation. This is fine for simple 3D stuff, but it would become a problem when implementing a proper physics engine.
+
+Possible improvements:
+- Remove assert()
+- Add quaternions
+- Unit tests
+- Documentation
+
+As of writing I'm trying out 3D game development in C#. I'm in a similar position as before, where the vector library I'm using is giving me a lot of problems. I'll probably have to make my own vector library again, which would be a good opportunity to use what I learned from this project and to put the improvements listed above into practice.
 
 ## Usage
 
